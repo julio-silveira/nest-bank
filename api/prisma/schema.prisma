@@ -11,20 +11,24 @@ datasource db {
 }
 
 model Assignor {
-  id       String    @id @default(uuid())
-  document String // @db.VarChar(30) sqlite does not support varchar size
-  email    String // @db.VarChar(140) sqlite does not support varchar size
-  phone    String // @db.VarChar(20) sqlite does not support varchar size
-  name     String // @db.VarChar(140) sqlite does not support varchar size
-  Payable  Payable[]
-  deleted  Boolean   @default(false)
+  id        String    @id @default(uuid())
+  document  String // @db.VarChar(30) sqlite does not support varchar size
+  email     String // @db.VarChar(140) sqlite does not support varchar size
+  phone     String // @db.VarChar(20) sqlite does not support varchar size
+  name      String // @db.VarChar(140) sqlite does not support varchar size
+  Payable   Payable[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 model Payable {
-  id           String   @id @default(uuid())
+  id           String    @id @default(uuid())
   value        Float
   emissionDate DateTime // @db.Date
-  assignor     Assignor @relation(fields: [assignorId], references: [id])
+  assignor     Assignor  @relation(fields: [assignorId], references: [id])
   assignorId   String
-  deleted      Boolean  @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
 }
