@@ -47,6 +47,17 @@ export default class PayableGenerator {
     return this;
   }
 
+  withAllFields(): PayableGenerator {
+    this.withId()
+      .withAssignorId()
+      .withValue()
+      .withEmissionDate()
+      .withCreatedAt()
+      .withUpdatedAt();
+
+    return this;
+  }
+
   toCreateDto(): CreatePayableDto {
     return {
       assignorId: this.assignorId,
