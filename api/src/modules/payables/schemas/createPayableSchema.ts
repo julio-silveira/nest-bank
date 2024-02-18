@@ -6,7 +6,7 @@ export const createPayableSchema = z
     emissionDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
       message: 'Invalid date format, send in YYYY-MM-DD format',
     }),
-    assignor: z.string().uuid(),
+    assignorId: z.string().uuid(),
   })
   .required();
 
