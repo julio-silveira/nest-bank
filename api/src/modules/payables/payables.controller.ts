@@ -15,7 +15,7 @@ import {
   CreatePayableDto,
   createPayableSchema,
 } from './schemas/createPayableSchema';
-import { ZodValidationPipe } from 'src/infrastructure/ZodValidationPipe';
+import { ZodValidationPipe } from '../../infrastructure/ZodValidationPipe';
 import { AssignorService } from '../assignor/assignor.service';
 import {
   UpdatePayableDto,
