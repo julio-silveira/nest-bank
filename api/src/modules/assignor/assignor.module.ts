@@ -5,5 +5,6 @@ import { AssignorController } from './assignor.controller';
 @Module({
   controllers: [AssignorController],
   providers: [AssignorService],
+  exports: [AssignorService],
 })
 export class AssignorModule {}

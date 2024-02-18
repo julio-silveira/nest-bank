@@ -15,7 +15,7 @@ import {
   CreatePayableDto,
   createPayableSchema,
 } from './schemas/createPayableSchema';
-import { ZodValidationPipe } from 'src/infrastructure/ZodValidationPipe';
+import { ZodValidationPipe } from '../../infrastructure/ZodValidationPipe';
 import { AssignorService } from '../assignor/assignor.service';
 import {
   UpdatePayableDto,
@@ -38,6 +38,11 @@ export class PayablesController {
   @Get(':id')
   async findUnique(@Param('id') id: string) {
     const payable = await this.payablesService.findUnique(id);
+
+    if (!payable) {
+      throw new NotFoundException('Payable not found');
+    }
+
     return payable;
   }
 
@@ -70,12 +75,14 @@ export class PayablesController {
       throw new NotFoundException('Payable not found');
     }
 
-    const assignor = await this.assignorService.findUnique(
-      updatePayableDto.assignorId,
-    );
+    if (updatePayableDto.assignorId) {
+      const assignor = await this.assignorService.findUnique(
+        updatePayableDto.assignorId,
+      );
 
-    if (!assignor) {
-      throw new NotFoundException('New assignor not found');
+      if (!assignor) {
+        throw new NotFoundException('New assignor not found');
+      }
     }
 
     const updatedPayable = await this.payablesService.update(

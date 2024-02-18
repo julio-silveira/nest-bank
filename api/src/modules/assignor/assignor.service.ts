@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateAssignorDto } from './schemas/createAssignor';
+import { UpdateAssignorDto } from './schemas/updateAssignor';
 
 @Injectable()
 export class AssignorService {
@@ -26,7 +27,7 @@ export class AssignorService {
     return createdAssignor;
   }
 
-  async update(id: string, updateData: CreateAssignorDto) {
+  async update(id: string, updateData: UpdateAssignorDto) {
     const updatedAssignor = await this.prismaService.assignor.update({
       where: { id },
       data: updateData,

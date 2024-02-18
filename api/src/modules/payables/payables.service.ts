@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePayableDto } from './schemas/createPayableSchema';
 import { UpdatePayableDto } from './schemas/updatePayableSchema';
+import { Payable } from '@prisma/client';
 
 @Injectable()
 export class PayablesService {
@@ -14,7 +15,7 @@ export class PayablesService {
     return payables;
   }
 
-  async findUnique(id: string) {
+  async findUnique(id: string): Promise<Payable | null> {
     const payable = await this.prisma.payable.findUnique({
       where: { id, deletedAt: null },
     });
