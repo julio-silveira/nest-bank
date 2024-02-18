@@ -15,7 +15,7 @@ import {
   CreateAssignorDto,
   createAssignorSchema,
 } from './schemas/createAssignor';
-import { ZodValidationPipe } from 'src/infrastructure/ZodValidationPipe';
+import { ZodValidationPipe } from '../..//infrastructure/ZodValidationPipe';
 import {
   UpdateAssignorDto,
   updateAssignorSchema,
@@ -34,6 +34,11 @@ export class AssignorController {
   @Get(':id')
   async findUnique(@Param('id') id: string) {
     const assignor = await this.assignorService.findUnique(id);
+
+    if (!assignor) {
+      throw new NotFoundException('Assignor not found');
+    }
+
     return assignor;
   }
 
