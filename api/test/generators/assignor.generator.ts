@@ -4,7 +4,7 @@ import fakeDocument from './document.fake.generator';
 import { CreateAssignorDto } from 'src/modules/assignor/schemas/createAssignor';
 import { UpdateAssignorDto } from 'src/modules/assignor/schemas/updateAssignor';
 
-export default class PayableGenerator {
+export default class AssignorGenerator {
   id: string;
   document: string;
   email: string;
@@ -14,7 +14,7 @@ export default class PayableGenerator {
   updatedAt: Date;
   deletedAt: Date | null;
 
-  withId(id?: string): PayableGenerator {
+  withId(id?: string): AssignorGenerator {
     this.id = id ? id : faker.string.uuid();
     return this;
   }
@@ -27,7 +27,7 @@ export default class PayableGenerator {
     document?: string;
     type: 'cpf' | 'cnpj';
     withSeparators?: boolean;
-  }): PayableGenerator {
+  }): AssignorGenerator {
     if (!document) {
       this.document = fakeDocument[type]({ withSeparators });
     } else {
@@ -36,34 +36,44 @@ export default class PayableGenerator {
     return this;
   }
 
-  withEmail(email: string = faker.internet.email()): PayableGenerator {
+  withEmail(email: string = faker.internet.email()): AssignorGenerator {
     this.email = email;
     return this;
   }
 
-  withPhone(phone: string = faker.phone.number()): PayableGenerator {
+  withPhone(phone: string = faker.phone.number()): AssignorGenerator {
     this.phone = phone;
     return this;
   }
 
-  withName(name: string = faker.person.fullName()): PayableGenerator {
+  withName(name: string = faker.person.fullName()): AssignorGenerator {
     this.name = name;
     return this;
   }
 
-  withCreatedAt(createdAt: Date = faker.date.recent()): PayableGenerator {
+  withCreatedAt(createdAt: Date = faker.date.recent()): AssignorGenerator {
     this.createdAt = createdAt;
     return this;
   }
 
-  withUpdatedAt(updatedAt: Date = faker.date.recent()): PayableGenerator {
+  withUpdatedAt(updatedAt: Date = faker.date.recent()): AssignorGenerator {
     this.updatedAt = updatedAt;
     return this;
   }
 
-  withDeletedAt(deletedAt?: Date): PayableGenerator {
+  withDeletedAt(deletedAt?: Date): AssignorGenerator {
     this.deletedAt = deletedAt ? deletedAt : faker.date.recent();
     return this;
+  }
+
+  withAllFields(): AssignorGenerator {
+    return this.withId()
+      .withDocument({ type: 'cpf' })
+      .withEmail()
+      .withName()
+      .withPhone()
+      .withCreatedAt()
+      .withUpdatedAt();
   }
 
   toCreateDto(): CreateAssignorDto {
@@ -108,5 +118,9 @@ export default class PayableGenerator {
       updatedAt: this.updatedAt,
       deletedAt: this.deletedAt,
     };
+  }
+
+  getId(): string {
+    return this.id;
   }
 }
