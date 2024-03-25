@@ -14,13 +14,13 @@ import { PayablesService } from './payables.service';
 import {
   CreatePayableDto,
   createPayableSchema,
-} from './schemas/createPayableSchema';
+} from './schemas/create-payable.schema';
 import { ZodValidationPipe } from '../../infrastructure/ZodValidationPipe';
 import { AssignorService } from '../assignor/assignor.service';
 import {
   UpdatePayableDto,
   updatePayableSchema,
-} from './schemas/updatePayableSchema';
+} from './schemas/update-payable.schema';
 
 @Controller('integration/payables')
 export class PayablesController {
