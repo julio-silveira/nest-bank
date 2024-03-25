@@ -1,12 +1,18 @@
-import { Controller, Post } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import { AuthService } from './services/auth.service';
+import { ZodValidationPipe } from '../../infrastructure/ZodValidationPipe';
+import {
+  AuthenticateDto,
+  authenticateSchema,
+} from './schemas/authenticate.schema';
 
-@Controller('integrations/auth')
+@Controller('integration/auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post()
-  async authenticate() {
-    return 'auth';
+  @UsePipes(new ZodValidationPipe(authenticateSchema))
+  async authenticate(@Body() body: AuthenticateDto) {
+    return body;
   }
 }
